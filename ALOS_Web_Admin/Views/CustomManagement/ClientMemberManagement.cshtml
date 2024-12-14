@@ -1,0 +1,285 @@
+﻿@using ALOS_Web_Admin.Models.Api.DbModels
+@using ALOS_Web_Admin.Helpers
+@{
+    ViewData["Title"] = "Registration";
+}
+<!-- DataTables -->
+<link rel="stylesheet" href="/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+<!-- Theme style -->
+<link rel="stylesheet" href="/Admin/dist/css/adminlte.min.css">
+<div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Client Member Management </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Pincode</th>
+                                            <th>Status</th>
+                                            <th>Main Balance</th>
+                                            <th>Date of Joined</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.Users != null)
+                                        {
+                                            foreach (var user in ViewBag.Users)
+                                            {
+                                                <tr>
+                                            <td>@user.Id</td>
+                                            <td>@user.Name</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Mobile</td>
+                                            <td>@user.Pincode</td>
+                                            <td>@user.Status</td>
+                                            <th>@AlosDbHelper.GetLastClosingBalanceOfRemiserById(user.Id.ToString())</th>
+                                          
+                                            <td>@user.CreatedAt</td>
+                                            <td style="width: 20.9%">
+
+                                                <form method="get" style="white-space: nowrap;display: inline" action="@Url.Action("ViewAllMemberManagementById","CustomManagement",new{id=user.Id,isAgent = false})">
+                                                    <button class="btn btn-outline-primary" type="submit" title="View" @*data-toggle="modal" data-target="#modal-danger"*@>
+                                                        <span class="fa fa-eye"></span>
+                                                    </button>
+                                                </form>
+                                                <a class="btn btn-outline-info" data-toggle="modal" data-target="#modal-default" title="Permission">
+                                                    <span class="fa fa-lock"></span>
+                                                </a>
+                                                <a href="@Url.Action("UpdateRegistration","CustomManagement",new{id=user.Id,isAgent = false})" class="btn btn-outline-warning " title="Edit">
+                                                    <span class="fa fa-edit"></span>
+                                                </a>
+                                                <form method="get" style="white-space: nowrap;display: inline" action="@Url.Action("DeleteUsersAllMemberManagement","CustomManagement",new{id=user.Id})">
+                                                    <button onclick="return deleteConfirm();" type="submit" class="btn btn-outline-danger" title="Delete">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<div class="modal fade" id="modal-xl">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Extra Large Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>ID :</span>
+                        <input type="hidden" name="id" value="77">
+                        <span class=""> 77</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>UserName :</span>
+                        <span class="">mujib</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>User Type :</span>
+                        <span class="">mujib</span>
+                    </li>
+
+                </ul>
+
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Service Providers</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <label>Awcc</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>Roshan</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>Mtn</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>Etisalat</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>Salaam</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- ./wrapper -->
+@section dataTableScripts
+{
+    <!-- Bootstrap 4 -->
+    <script src="/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/Admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/Admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/Admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/Admin/plugins/jszip/jszip.min.js"></script>
+    <script src="/Admin/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/Admin/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/Admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/Admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/Admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/Admin/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/Admin/dist/js/demo.js"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+        function deleteConfirm() {
+            var message = confirm('Are sure to delete member ?');
+            if (message) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+}

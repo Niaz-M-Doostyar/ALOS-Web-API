@@ -1,0 +1,91 @@
+﻿@using ALOS_Web_Admin.Helpers
+@model object
+
+@{
+    ViewBag.Title = "View Details";
+}
+<div class="content-wrapper">
+
+<!-- Main content -->
+<section class="content">
+<div class="container-fluid">
+<!-- Small boxes (Stat box) -->
+<div class="row">
+
+<div class="col-sm-12">
+<div class="card card-primary">
+<div class="card-header">
+    <h3 class="card-title">User Information</h3>
+</div>
+
+    <div class="card-body col-sm-6">
+
+
+        <ul>
+            @if (ViewBag.User != null)
+            {
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Id :</span>
+                    <span>@ViewBag.User.Id</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Name :</span>
+                    <span>@ViewBag.User.Name</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Email :</span>
+                    <span>@ViewBag.User.Email</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Role :</span>
+                    <span>@RolesHelper.GetRoleName(ViewBag.User.RoleId)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Mobile :</span>
+                    <span>@ViewBag.User.Mobile</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Pin Code :</span>
+                    <span>@ViewBag.User.Pincode</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Address :</span>
+                    <span>@ViewBag.User.Address</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>City :</span>
+                    <span>@ViewBag.User.City</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Company Name :</span>
+                    <span>@ViewBag.User.Companyname</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Status :</span>
+                    <a href="@Url.Action("ChangeStatusMemberManagementById","CustomManagement",new {id=ViewBag.User.Id,isAgent = ViewBag.IsAgent+";"+ViewBag.User.Status})" class="btn btn-danger status">@ViewBag.User.Status</a>
+                    <a href="@Url.Action("AllMemberManagement")" class="btn btn-info nav-item">Back</a>
+                </li>
+
+            }
+
+
+
+
+
+
+        </ul>
+
+    </div>
+</div>
+
+</div>
+
+
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+</div>
+</section>
+<!-- /.content -->
+</div>v>

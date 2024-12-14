@@ -1,0 +1,111 @@
+﻿@using ALOS_Web_Admin.Helpers
+@model object
+
+@{
+    ViewBag.Title = "Top up Details";
+}
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Top up Information</h3>
+                        </div>
+
+                        <div class="card-body col-sm-6">
+                            @if (ViewBag.Topup != null)
+                            {
+
+                                <form action="@Url.Action("ViewTopUpTransferById","WalletManagement")" method="post">
+                                    <table class="table table-bordered">
+
+                                        <tr>
+                                            <td>No</td>
+                                            <td name=""><label for="">@ViewBag.Topup.Id</label></td>
+
+                                            <input type="hidden" value="@ViewBag.Topup.Id" name="toptransfer_id">
+                                            <input type="hidden" value="@ViewBag.Topup.User" name="user">
+                                        </tr>
+
+                                        <tr>
+                                            <td>Amount</td>
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.Topup.Amount" name="amount">
+                                                <label for="">@ViewBag.Topup.Amount</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td name="date">Data</td>
+
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.Topup.UpdatedAt" name="updated_at">
+                                                <label for="">@ViewBag.Topup.UpdatedAt</label>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td name="remarks">Remarks</td>
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.Topup.Remarks" name="remarks">
+                                                <label for="">@ViewBag.Topup.Remarks</label>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Status</td>
+                                            <input type="hidden" value="@ViewBag.Topup.Stutus" name="status">
+                                            <input type="hidden" value="@ViewBag.Topup.PaymentMode" name="PaymentMode">
+
+                                            <td><label for="">@ViewBag.Topup.Stutus</label></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Action</td>
+                                            <td>
+
+                                                <input onclick="return deleteConfirm()" type="submit" class="btn btn-info" name="submitbutton" value="Add">
+                                                <input type="submit" class="btn btn-danger" name="submitbutton" value="Reject">
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                </form>
+                            }
+
+
+                        </div>
+
+
+                        <ul>
+                          
+
+
+
+
+
+
+                        </ul>
+
+                    </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /.row -->
+                <!-- Main row -->
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>v>

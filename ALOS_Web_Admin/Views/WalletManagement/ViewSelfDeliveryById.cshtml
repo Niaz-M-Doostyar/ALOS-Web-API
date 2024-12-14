@@ -1,0 +1,100 @@
+﻿@using ALOS_Web_Admin.Helpers
+@model object
+
+@{
+    ViewBag.Title = "Self Delivery Details";
+}
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Self Delivery Information</h3>
+                        </div>
+
+                        <div class="card-body col-sm-6">
+                            @if (ViewBag.SelfDelivery != null)
+                            {
+
+                                <form action="@Url.Action("ViewSelfDeliveryById","WalletManagement")" method="post">
+                                <table class="table table-bordered">
+                                <tr>
+                                        <td>Order No</td>
+                                        <td name=""><label for="">@ViewBag.SelfDelivery.Id</label></td>
+                                        <input type="hidden" value="@ViewBag.SelfDelivery.Id" name="delivery_id">
+                                        <input type="hidden" value="@ViewBag.SelfDelivery.AdminId" name="user">
+                                        </tr>
+
+                                        <tr>
+                                            <td>Order Amount</td>
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.SelfDelivery.Amount" name="amount" id="amount">
+                                                <label for="">@ViewBag.SelfDelivery.Amount</label>
+                                                <label for=""></label>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td name="date">Order Data</td>
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.SelfDelivery.UpdatedAt" name="updated_at">
+                                                <label for="">@ViewBag.SelfDelivery.UpdatedAt</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td name="remarks">Order Remarks</td>
+                                            <td>
+                                                <input type="hidden" value="@ViewBag.SelfDelivery.Remark" name="remark">
+                                                <label for="">@ViewBag.SelfDelivery.Remark</label>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Status</td>
+                                            <input type="hidden" value="@ViewBag.SelfDelivery.Status" name="status">
+                                            <td><label for="">@ViewBag.SelfDelivery.Status</label></td>
+                                        </tr>
+
+                                <tr>
+                                    <td>Action</td>
+                                    <td>
+
+                                        <input onclick="return Confirm()" type="submit" class="btn btn-info" name=submitbutton value="Add">
+                                        <input type="submit" class="btn btn-danger" name=submitbutton value="Reject">
+
+                              
+                                    </td></tr>
+                                
+                                </table>
+                                </form>
+                            }
+
+
+                        </div>
+
+
+                        <ul>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- /.row -->
+            <!-- Main row -->
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>v>

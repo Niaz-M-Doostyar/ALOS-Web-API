@@ -1,0 +1,168 @@
+﻿@using ALOS_Web_Admin.Models.Api.DbModels
+@{
+    ViewData["Title"] = "Top up Transfer";
+}
+<!-- DataTables -->
+<link rel="stylesheet" href="/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title accent-danger">Top up Transfer</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form method="post" action="@Url.Action("TopUpTransfer","WalletManagement")">
+                            <div class="card-body">
+                                @*@if (ViewContext.ViewBag.UserDetailsState.ContainsKey("User"))
+                                {
+                                    <div class="alert alert-danger alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>@Html.ValidationMessage("User", "", new { @class = "text-default" })</strong>
+                                    </div>
+                                }*@
+                                @if (ViewBag.Message != null)
+                                {
+                                    <div class="alert alert-success alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>@ViewBag.Message</strong>
+                                    </div>
+                                }
+                                <div class="col-sm-4 float-left">
+                                    <div class="form-group col-sm-12 float-left">
+                                        <label>Member</label>
+                                        <select name="member" id="member" class="form-control js-example-basic-single">
+                                        
+                                            <option value="0">Select Client</option>
+                                            @foreach (var member in ViewBag.Users)
+                                            {
+                                                <option value="@member.Id">@member.Name</option>
+                                            }
+                                        </select>
+
+                                        <label for="amount">Amount</label>
+                                        <input type="text" class="form-control" id="amount" placeholder="Amount" name="amount" onkeyup="multiplyPercent()">
+
+                                    </div>
+                               
+                                    <div class="form-group col-sm-12 float-left" id="commisionDiv">
+                                        <label for="c_amount">Commission Amount</label>
+                                        @if (ViewBag.UserDetails != null && ViewBag.GRemiserDetails !=null)
+                                        {
+                                            <input disabled="" type="text" class="form-control" id="c_amount" name="c_amount" placeholder="Commission Amount" value="@ViewBag.UserDetails.Commission">
+                                        }
+                                        else
+                                        {
+                                            <input disabled="" type="text" class="form-control" id="c_amount" name="c_amount" placeholder="Commission Amount" value="">
+                                        }
+                                    </div>
+                                </div>
+                            @if (ViewBag.UserDetails != null && ViewBag.GRemiserDetails != null)
+                            {
+                                <div class="col-sm-6 float-right">
+
+                                    <div class="col-md-6" style="margin-bottom:20px">
+                                        <h4 class="text-center text-dark">Member Details </h4>
+                                    </div>
+                                    <div class="col-md-5 col-md-offset-1">
+                                            <input type="hidden" name="memberId" value="@ViewBag.UserDetails.Id"/>
+                                            <p>Member ID : <span id="id">@ViewBag.GRemiserDetails.Id</span> </p>
+                                            <p>Member Name : <span id="names">@ViewBag.UserDetails.Name</span> </p>
+                                            <p>Mobile Number : <span id="mobile">@ViewBag.UserDetails.Mobile</span> </p>
+                                            <p>Pattern ID : <span id="pattern-id"></span> </p>
+                                            <p>Deposit Bank Name : <span id="deposit-bank"></span> </p>
+                                            <p>Mobile Type : <span id="mobile-type"></span> </p>
+                                            <p>Balance : <span id="balance">@ViewBag.GRemiserDetails.ClosingBalance</span> </p>
+                                            <p>Status : <span id="status">@ViewBag.UserDetails.Status</span> </p>
+                                            <p>Commission : <span id="commission">@ViewBag.UserDetails.Commission</span> </p>
+                                            <p>Bank Ac No : <span id="bank-acc"></span> </p>
+                                        
+
+                                    </div>
+
+                                </div>
+                            }
+                                <div class="col-sm-4 float-left">
+
+                                    <div class="form-group col-sm-12 float-left">
+                                        <label for="t_amount">Topup Amount</label>
+                                        <input readonly="" type="text" class="form-control" id="t_amount" name="amount" placeholder="Topup Amount" value="0">
+
+                                    </div>
+                                    <div class="form-group col-sm-12 float-left">
+                                        <label for="p">Payment Mode</label>
+                                        <select class="form-control" name="PaymentMode" id="p">
+                                            <option selected="" disabled="" value="">--Select--</option>
+                                            <option value="cash">Cash On Hand</option>
+                                            <option value="cash">Cash On Bank</option>
+                                            <option value="bank">Cheque</option>
+                                            <option value="debit">RTGs/NEFT</option>
+                                            <option value="debit">Exchange</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group col-sm-12 float-left">
+                                        <label for="member" id="rem">Remark</label>
+                                        <input type="text" class="form-control" id="remark" required="" name="remarks" placeholder="Remark">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-danger">Cancel</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+
+                </div>
+
+
+                <!-- /.row -->
+                <!-- Main row -->
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+@section dataTableScripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var select2 = $(".js-example-basic-single").select2();
+            select2.data('select2').$selection.css('height', '39px');
+        });
+    </script>
+    <script>
+    $('#member').on('select2:select', function (e) {
+        var id = document.getElementById('member').value; //if you want to pass an Id parameter
+        window.location.href = '@Url.Action("TopUpTransfer", "WalletManagement")?id='+id+'& isAgent = true';
+    });
+    function multiplyPercent(){
+        var amount = parseFloat($('#amount').val());
+        var c_amount = parseFloat($('#c_amount').val());
+        var percent=(amount/100)*c_amount;
+        var res=amount+percent;
+        $('#t_amount').val(res);
+
+    }
+    </script>
+
+}
