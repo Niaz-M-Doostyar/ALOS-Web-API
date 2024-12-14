@@ -1,5 +1,46 @@
-*.csharp linguist-detectable=true  
-*.java linguist-detectable=false  
-*.js linguist-detectable=false  
-*.html linguist-detectable=false  
-*.xml linguist-detectable=false
+
+# Mark C# files as detectable
+*.cs linguist-language=C# linguist-detectable=true
+
+# Razor view files and HTML files
+*.cshtml linguist-language=HTML linguist-detectable=true
+*.html linguist-language=HTML linguist-detectable=true
+
+# CSS files
+*.css linguist-language=CSS linguist-detectable=true
+
+# JavaScript files
+*.js linguist-language=JavaScript linguist-detectable=true
+*.min.js linguist-detectable=false  # Ignore minified JS files
+
+# JSON files (configuration or data)
+*.json linguist-language=JSON linguist-detectable=true
+
+# XML configuration files
+*.config linguist-language=XML linguist-detectable=true
+*.xml linguist-language=XML linguist-detectable=true
+
+# Entity Framework Core migrations
+Migrations/* linguist-language=C# linguist-detectable=true
+
+# Exclude static libraries and vendored assets
+node_modules/* linguist-detectable=false
+wwwroot/lib/* linguist-detectable=false
+
+# Ignore compiled binaries and other build artifacts
+*.dll linguist-detectable=false
+*.exe linguist-detectable=false
+*.pdb linguist-detectable=false
+
+# Ignore Visual Studio metadata files
+*.csproj linguist-detectable=false
+*.sln linguist-detectable=false
+
+# Log files and cache files
+*.log linguist-detectable=false
+*.cache linguist-detectable=false
+
+# Include static files (images, icons, fonts) if needed
+*.png linguist-detectable=true
+*.jpg linguist-detectable=true
+*.svg linguist-detectable=true
