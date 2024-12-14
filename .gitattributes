@@ -7,7 +7,7 @@
 
 # Razor view files and HTML files
 *.cshtml linguist-language=HTML linguist-detectable=true
-*.html linguist-language=HTML linguist-detectable=true
+*.html linguist-language=HTML linguist-detectable=false
 
 # CSS files
 *.css linguist-language=CSS linguist-detectable=true
