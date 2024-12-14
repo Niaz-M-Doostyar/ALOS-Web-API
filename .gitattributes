@@ -1,13 +1,9 @@
-
-*.php linguist-detectable=true  
-
-
 # Mark C# files as detectable
 *.cs linguist-language=C# linguist-detectable=true
 
 # Razor view files and HTML files
-*.cshtml linguist-language=HTML linguist-detectable=true
-*.html linguist-language=HTML linguist-detectable=false
+*.cshtml linguist-language=c# linguist-detectable=true
+*.html linguist-language=HTML linguist-detectable=true
 
 # CSS files
 *.css linguist-language=CSS linguist-detectable=true
